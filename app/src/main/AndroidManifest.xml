@@ -3,6 +3,7 @@
     package="com.techrz.loaddata">
 
     <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -10,7 +11,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.LoadData">
-        <uses-library android:name="org.apache.http.legacy" android:required="false" />
+        <activity
+            android:name=".imageDescription"
+            android:exported="false" />
+
+        <uses-library
+            android:name="org.apache.http.legacy"
+            android:required="false" />
+
         <activity
             android:name=".MainActivity"
             android:exported="true">
@@ -20,9 +28,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".MyAttendanceActivity"
-            android:exported="true"/>
     </application>
 
 </manifest>

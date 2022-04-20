@@ -62,7 +62,9 @@ public class customImageAdapter extends BaseAdapter {
         rowView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(context, MyAttendanceActivity.class);
+                Intent intent = new Intent(context, imageDescription.class);
+                intent.putExtra("imageID", imagesArrayList.getimageID());
+                intent.putExtra("imageDes", imagesArrayList.getDescription());
                 context.startActivity(intent);
             }
         });
