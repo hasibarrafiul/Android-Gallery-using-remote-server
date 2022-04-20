@@ -22,21 +22,13 @@ public class JSONParser {
 		return instance;
 	}
 
-	public String makeHttpRequest(String url, String method, List<NameValuePair> params) {
+	public String makeHttpRequest(String url, String method) {
 
 		HttpURLConnection http = null;
 		InputStream is = null;
 		String data = "";
-		// Making HTTP request
 		try {
-			// check for request method
-			if (method == "POST") {
-				//httpClient = new DefaultHttpClient();
-				if(params != null) {
-					String paramString = URLEncodedUtils.format(params, "utf-8");
-					url += "?" + paramString;
-				}
-			}
+
 			System.out.println("@JSONParser-"+": "+ url);
 			URL urlc = new URL(url);
 			http = (HttpURLConnection) urlc.openConnection();
