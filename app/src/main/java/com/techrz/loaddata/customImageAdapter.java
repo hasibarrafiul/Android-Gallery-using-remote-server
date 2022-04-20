@@ -6,16 +6,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-public class customCourseAdapter extends BaseAdapter {
+public class customImageAdapter extends BaseAdapter {
 
     Context context;
-    ArrayList<courseArrayList> arrayList;
-    String data;
-    public customCourseAdapter(Context context, ArrayList<courseArrayList> arrayList){
+    ArrayList<imagesArrayList> arrayList;
+    String imageURL, description;
+    public customImageAdapter(Context context, ArrayList<imagesArrayList> arrayList){
         this.context = context;
         this.arrayList = arrayList;
 
@@ -42,15 +45,17 @@ public class customCourseAdapter extends BaseAdapter {
 
         View rowView = inflater.inflate(R.layout.datacustomview, parent, false);
 
-        TextView coursename = rowView.findViewById(R.id.coursename);
+        ImageView coursename = rowView.findViewById(R.id.coursename);
 
 
 
-        courseArrayList courseArrayList = arrayList.get(position);
+        imagesArrayList imagesArrayList = arrayList.get(position);
 
 
-        data = courseArrayList.getData();
-        coursename.setText(courseArrayList.getData());
+        imageURL = imagesArrayList.getimageID();
+        description = imagesArrayList.getDescription();
+        Picasso.get().load("https://muthosoft.com/univ/photos/"+imagesArrayList.getimageID()).resize(1000,1000).into(coursename);
+        //coursename.setText(imagesArrayList.getimageID());
         //System.out.println(data);
 
 

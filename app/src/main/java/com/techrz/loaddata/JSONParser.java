@@ -46,7 +46,6 @@ public class JSONParser {
 			//System.out.println("Here 3");
 			http.connect();
 			is = http.getInputStream();
-			//System.out.println("Here 4");
 			BufferedReader reader = new BufferedReader(new InputStreamReader(is, "iso-8859-1"), 8);
 			StringBuilder sb = new StringBuilder();
 			String line = null;
@@ -56,7 +55,6 @@ public class JSONParser {
 			}
 
 			is.close();
-
 			return sb.toString();
 
 		} catch (Exception e) {

@@ -1,12 +1,9 @@
 package com.techrz.loaddata;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.webkit.WebView;
 import android.widget.GridView;
 
 import org.apache.http.NameValuePair;
@@ -18,10 +15,10 @@ import java.util.List;
 public class MainActivity extends Activity {
 
     private GridView gridView;
-    customCourseAdapter customCourseAdapter;
-    ArrayList<courseArrayList> arrayList;
+    customImageAdapter customImageAdapter;
+    ArrayList<imagesArrayList> arrayList;
 
-    private String URL = "https://muthosoft.com/univ/attendance/report.php";
+    private String URL = "https://muthosoft.com/univ/photos/";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,9 +33,9 @@ public class MainActivity extends Activity {
     }
     @SuppressLint("StaticFieldLeak")
     private void httpRequest(final String keys[], final String values[]){
-        new AsyncTask<Void, Void, ArrayList>(){
+        new AsyncTask<Void, Void, String>(){
             @Override
-            protected ArrayList<courseArrayList> doInBackground(Void... param){
+            protected String doInBackground(Void... param){
                 try{
                     List<NameValuePair> params = new ArrayList<NameValuePair>();
                     for(int i=0; i<keys.length; i++){
@@ -46,11 +43,9 @@ public class MainActivity extends Activity {
                     }
 
                     String data = JSONParser.getInstance().makeHttpRequest(URL, "POST", params);
-                    ArrayList<courseArrayList> arrayList = new ArrayList<>();
-                    courseArrayList courseArrayList = new courseArrayList(data);
-                    arrayList.add(courseArrayList);
 
-                    return arrayList;
+
+                    return data;
                 }catch (Exception ex){
                     ex.printStackTrace();
                 }
@@ -58,17 +53,29 @@ public class MainActivity extends Activity {
             }
 
             @Override
-            protected void onPostExecute(ArrayList arrayList) {
-                super.onPostExecute(arrayList);
+            protected void onPostExecute(String data) {
+                super.onPostExecute(data);
+                //System.out.println(data);
+                String[] splitByComma = data.split(",", 100);
+                ArrayList<imagesArrayList> arrayList = new ArrayList<>();
+                for (String a : splitByComma){
+                    String[] splitByColon = a.split(":");
+                        //System.out.println(splitByColon[0]);
+                        //System.out.println(splitByColon[1]);
+                    imagesArrayList imagesArrayList = new imagesArrayList(splitByColon[0], splitByColon[1]);
+                    arrayList.add(imagesArrayList);
+
+                }
+
                 loadData(arrayList);
             }
         }.execute();
     }
     void loadData(ArrayList arrayList){
         //System.out.println(arrayList.size());
-        customCourseAdapter = new customCourseAdapter(this,arrayList);
-        gridView.setAdapter(customCourseAdapter);
-        customCourseAdapter.notifyDataSetChanged();
+        customImageAdapter = new customImageAdapter(this,arrayList);
+        gridView.setAdapter(customImageAdapter);
+        customImageAdapter.notifyDataSetChanged();
 
     }
 }
